@@ -11,10 +11,15 @@ const locales = {
 }
 
 function americanToBritish(text) {
+  const translationTbls = {
+    americanOnly: [americanOnly],
+    americanToBritishSpelling: [americanToBritishSpelling],
+    americanToBritishTitles:  [americanToBritishTitles]
+  }
   let translation = text;
-  translation = replacer(translation, americanOnly);
-  translation = replacer(translation, americanToBritishSpelling);
-  translation = replacer(translation, americanToBritishTitles);
+  for (let [tbl, reversed] of Object.values(translationTbls)) {
+    translation = replacer(translation, tbl, reversed);
+  }
 
   if (text === translation) {
     return 'Everything looks good to me!';
@@ -23,10 +28,15 @@ function americanToBritish(text) {
 }
 
 function britishToAmerican(text) {
+  const translationTbls = {
+    britishOnly: [britishOnly],
+    americanToBritishSpelling: [americanToBritishSpelling, true],
+    americanToBritishTitles:  [americanToBritishTitles, true]
+  }
   let translation = text;
-  translation = replacer(translation, britishOnly);
-  translation = replacer(translation, americanToBritishSpelling, true);
-  translation = replacer(translation, americanToBritishTitles, true);
+  for (let [tbl, reversed] of Object.values(translationTbls)) {
+    translation = replacer(translation, tbl, reversed);
+  }
 
   if (text === translation) {
     return 'Everything looks good to me!';
@@ -34,14 +44,14 @@ function britishToAmerican(text) {
   return translation;
 }
 
-function replacer(text, translateObj, reversed = false) {
+function replacer(text, translationTbl, reversed = false) {
   if (!reversed) {
-    for (let [key, value] of Object.entries(translateObj)) {
+    for (let [key, value] of Object.entries(translationTbl)) {
       text = text.replace(new RegExp(key, 'gi'), `<span class="highlight">${value}</span>`);
     }
     return text;
   }
-  for (let [key, value] of Object.entries(translateObj)) {
+  for (let [key, value] of Object.entries(translationTbl)) {
     text = text.replace(new RegExp(value, 'gi'), `<span class="highlight">${key}</span>`);
   }
   return text;
