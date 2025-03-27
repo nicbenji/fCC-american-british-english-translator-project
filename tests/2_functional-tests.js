@@ -23,7 +23,9 @@ suite('Functional Tests', () => {
         assert.equal(res.type, 'application/json');
         assert.deepEqual(res.body, {
           text: 'My favorite color is blue, I always put it in the center',
-          translation: 'My favourite colour is blue, I always put it in the centre'
+          translation: 'My <span class="highlight">favourite</span> '
+          + '<span class="highlight">colour</span> is blue, '
+          + 'I always put it in the <span class="highlight">centre</span>'
         });
         done();
       });

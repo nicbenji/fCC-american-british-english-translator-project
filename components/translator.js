@@ -37,12 +37,12 @@ function britishToAmerican(text) {
 function replacer(text, translateObj, reversed = false) {
   if (!reversed) {
     for (let [key, value] of Object.entries(translateObj)) {
-      text = text.replace(new RegExp(key, 'gi'), value);
+      text = text.replace(new RegExp(key, 'gi'), `<span class="highlight">${value}</span>`);
     }
     return text;
   }
   for (let [key, value] of Object.entries(translateObj)) {
-    text = text.replace(new RegExp(value, 'gi'), key);
+    text = text.replace(new RegExp(value, 'gi'), `<span class="highlight">${key}</span>`);
   }
   return text;
 }

@@ -13,7 +13,7 @@ suite('Unit Tests', () => {
     const text = 'Mangoes are my favorite fruit.';
     assert.equal(
       translator.translate(text, americanToBritish),
-      'Mangoes are my favourite fruit.'
+      'Mangoes are my <span class="highlight">favourite</span> fruit.'
     );
   });
 
@@ -21,7 +21,7 @@ suite('Unit Tests', () => {
     const text = 'We watched the footie match for a while.';
     assert.equal(
       translator.translate(text, britishToAmerican),
-      'We watched the soccer match for a while.'
+      'We watched the <span class="highlight">soccer</span> match for a while.'
     );
   });
 
