@@ -15,20 +15,19 @@ suite('Functional Tests', () => {
     chai.request(server)
       .post('/api/translate')
       .send({
-        text: 'Test',
+        text: 'My favorite color is blue, I always put it in the center',
         locale: americanToBritish
       })
       .end((_err, res) => {
         assert.equal(res.status, 200);
         assert.equal(res.type, 'application/json');
         assert.deepEqual(res.body, {
-          text: 'Test',
-          translation: ''
+          text: 'My favorite color is blue, I always put it in the center',
+          translation: 'My favourite colour is blue, I always put it in the centre'
         });
         done();
       });
   });
-
 
   test('should return an error on wrong locale', (done) => {
     chai.request(server)
@@ -109,7 +108,7 @@ suite('Functional Tests', () => {
         assert.equal(res.type, 'application/json');
         assert.deepEqual(res.body, {
           text,
-          translation: ''//'Everything looks good to me!'
+          translation: 'Everything looks good to me!'
         });
         done();
       });

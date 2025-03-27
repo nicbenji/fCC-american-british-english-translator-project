@@ -11,11 +11,40 @@ const locales = {
 }
 
 function americanToBritish(text) {
-  return '';
+  let translation = text;
+  translation = replacer(translation, americanOnly);
+  translation = replacer(translation, americanToBritishSpelling);
+  translation = replacer(translation, americanToBritishTitles);
+
+  if (text === translation) {
+    return 'Everything looks good to me!';
+  }
+  return translation;
 }
 
 function britishToAmerican(text) {
-  return '';
+  let translation = text;
+  translation = replacer(translation, britishOnly);
+  translation = replacer(translation, americanToBritishSpelling, true);
+  translation = replacer(translation, americanToBritishTitles, true);
+
+  if (text === translation) {
+    return 'Everything looks good to me!';
+  }
+  return translation;
+}
+
+function replacer(text, translateObj, reversed = false) {
+  if (!reversed) {
+    for (let [key, value] of Object.entries(translateObj)) {
+      text = text.replace(new RegExp(key, 'gi'), value);
+    }
+    return text;
+  }
+  for (let [key, value] of Object.entries(translateObj)) {
+    text = text.replace(new RegExp(value, 'gi'), key);
+  }
+  return text;
 }
 
 class Translator {
