@@ -11,14 +11,20 @@ const locales = {
 }
 
 function americanToBritish(text) {
-  const translationTbls = {
-    americanOnly: [americanOnly],
-    americanToBritishSpelling: [americanToBritishSpelling],
-    americanToBritishTitles:  [americanToBritishTitles]
+  const translationTbls = [
+    { table: americanOnly },
+    { table: americanToBritishSpelling },
+    { table: americanToBritishTitles },
+  ]
+  //WARNING: ISSUE IS THAT SORT METHOD RETURNS AN ARRAY
+  const sortedTbls = [];
+  for (let tbl of translationTbls) {
+    sortedTbls.push(sortTranslationTbl(tbl));
   }
+
   let translation = text;
-  for (let [tbl, reversed] of Object.values(translationTbls)) {
-    translation = replacer(translation, tbl, reversed);
+  for (let tbl of sortedTbls) {
+    translation = replacer(translation, tbl);
   }
 
   if (text === translation) {
@@ -28,14 +34,22 @@ function americanToBritish(text) {
 }
 
 function britishToAmerican(text) {
-  const translationTbls = {
-    britishOnly: [britishOnly],
-    americanToBritishSpelling: [americanToBritishSpelling, true],
-    americanToBritishTitles:  [americanToBritishTitles, true]
+  const translationTbls = [
+    { table: britishOnly },
+    {
+      table: americanToBritishSpelling,
+      reversed: true
+    },
+    { table: americanToBritishTitles, reversed: true },
+  ]
+  const sortedTbls = [];
+  for (let tbl of translationTbls) {
+    sortedTbls.push(sortTranslationTbl(tbl));
   }
+
   let translation = text;
-  for (let [tbl, reversed] of Object.values(translationTbls)) {
-    translation = replacer(translation, tbl, reversed);
+  for (let tbl of sortedTbls) {
+    translation = replacer(translation, tbl);
   }
 
   if (text === translation) {
@@ -44,15 +58,23 @@ function britishToAmerican(text) {
   return translation;
 }
 
-function replacer(text, translationTbl, reversed = false) {
-  if (!reversed) {
-    for (let [key, value] of Object.entries(translationTbl)) {
-      text = text.replace(new RegExp(key, 'gi'), `<span class="highlight">${value}</span>`);
-    }
-    return text;
+function sortTranslationTbl(translationTbl) {
+  if (translationTbl.reversed) {
+    return Object.fromEntries(
+      Object.entries(translationTbl.table)
+        .sort((a, b) => b[1].length - a[1].length)
+        .map(([key, value]) => [value, key])
+    );
   }
+  return Object.fromEntries(
+    Object.entries(translationTbl.table)
+      .sort((a, b) => b[0].length - a[0].length)
+  );
+}
+
+function replacer(text, translationTbl) {
   for (let [key, value] of Object.entries(translationTbl)) {
-    text = text.replace(new RegExp(value, 'gi'), `<span class="highlight">${key}</span>`);
+    text = text.replace(new RegExp(key, 'gi'), `<span class="highlight">${value}</span>`);
   }
   return text;
 }
