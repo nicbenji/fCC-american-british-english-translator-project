@@ -12,9 +12,9 @@ const locales = {
 
 function americanToBritish(text) {
   const translationTbls = [
-    { table: americanOnly },
     { table: americanToBritishSpelling },
     { table: americanToBritishTitles },
+    { table: americanOnly }
   ]
 
   return translate(text, translationTbls, '.');
@@ -22,12 +22,12 @@ function americanToBritish(text) {
 
 function britishToAmerican(text) {
   const translationTbls = [
-    { table: britishOnly },
     {
       table: americanToBritishSpelling,
       reversed: true
     },
     { table: americanToBritishTitles, reversed: true },
+    { table: britishOnly }
   ]
 
   return translate(text, translationTbls);
@@ -47,6 +47,7 @@ function translate(text, translationTbls, timeSeparator = ':') {
   translation = timeReplacer(translation, timeSeparator);
 
   if (text === translation) {
+    console.log(text, translation);
     return 'Everything looks good to me!';
   }
   return translation;
@@ -69,7 +70,13 @@ function sortTranslationTbl(translationTbl) {
 
 function replacer(text, translationTbl) {
   for (let [key, value] of Object.entries(translationTbl)) {
-    text = text.replace(new RegExp(key, 'gi'), `<span class="highlight">${value}</span>`);
+    const escapeRegex = /[.*+?^${}()|[\]\\]/g;
+    const replacedKey = key.replace(escapeRegex, '\\$&');
+    console.log(replacedKey);
+    text = text.replace(
+      new RegExp(`\\b${replacedKey}(?=\\W|$)`, 'gi'),
+      `<span class="highlight">${value}</span>`
+    );
   }
   return text;
 }

@@ -97,5 +97,36 @@ suite('Unit Tests', () => {
     );
   });
 
+  test('should translate to american correctly 2', () => {
+    const text = 'Paracetamol takes up to an hour to work.';
+    assert.equal(
+      translator.getTranslation(text, britishToAmerican),
+      '<span class="highlight">Tylenol</span> takes up to an hour to work.'
+    );
+  });
+
+  test('should translate to american correctly 3', () => {
+    const text = 'First, caramelise the onions.';
+    assert.equal(
+      translator.getTranslation(text, britishToAmerican),
+      'First, <span class="highlight">caramelize</span> the onions.'
+    );
+  });
+
+  test('should translate to american correctly 4', () => {
+    const text = 'I spent the bank holiday at the funfair.';
+    assert.equal(
+      translator.getTranslation(text, britishToAmerican),
+      'I spent the <span class="highlight">public holiday</span> at the <span class="highlight">carnival</span>.'
+    );
+  });
+
+  test('should translate to american correctly 5', () => {
+    const text = 'I had a bicky then went to the chippy.';
+    assert.equal(
+      translator.getTranslation(text, britishToAmerican),
+      'I had a <span class="highlight">cookie</span> then went to the <span class="highlight">fish-and-chip shop</span>.'
+    );
+  });
 
 });
