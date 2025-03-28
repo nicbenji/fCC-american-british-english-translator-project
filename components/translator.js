@@ -47,7 +47,6 @@ function translate(text, translationTbls, timeSeparator = ':') {
   translation = timeReplacer(translation, timeSeparator);
 
   if (text === translation) {
-    console.log(text, translation);
     return 'Everything looks good to me!';
   }
   return translation;
@@ -72,7 +71,6 @@ function replacer(text, translationTbl) {
   for (let [key, value] of Object.entries(translationTbl)) {
     const escapeRegex = /[.*+?^${}()|[\]\\]/g;
     const replacedKey = key.replace(escapeRegex, '\\$&');
-    console.log(replacedKey);
     text = text.replace(
       new RegExp(`\\b${replacedKey}(?=\\W|$)`, 'gi'),
       `<span class="highlight">${value}</span>`
@@ -85,7 +83,7 @@ function timeReplacer(text, separator) {
   if (separator !== '.' && separator !== ':') {
     throw new Error('Invalid separator');
   }
-  const timestamps = text.match(/(0[0-9]|1[0-9]|2[0-3])(\.|:)[0-5][0-9]/g);
+  const timestamps = text.match(/(?:[0-1]?[0-9]|2[0-3])([.:])[0-5][0-9]/g);
   if (!timestamps) {
     return text;
   }

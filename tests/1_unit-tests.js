@@ -129,4 +129,44 @@ suite('Unit Tests', () => {
     );
   });
 
+  test('should translate to american correctly 6', () => {
+    const text = "I've just got bits and bobs in my bum bag.";
+    assert.equal(
+      translator.getTranslation(text, britishToAmerican),
+      'I\'ve just got <span class="highlight">odds and ends</span> in my <span class="highlight">fanny pack</span>.'
+    );
+  });
+
+  test('should translate to american correctly 7', () => {
+    const text = 'The car boot sale at Boxted Airfield was called off.';
+    assert.equal(
+      translator.getTranslation(text, britishToAmerican),
+      'The <span class="highlight">swap meet</span> at Boxted Airfield was called off.'
+    );
+  });
+
+  test('should translate to american correctly 8', () => {
+    const text = 'Have you met Mrs Kalyani?';
+    assert.equal(
+      translator.getTranslation(text, britishToAmerican),
+      'Have you met <span class="highlight">Mrs.</span> Kalyani?'
+    );
+  });
+
+  test('should translate to american correctly 9', () => {
+    const text = "Prof Joyner of King's College, London.";
+    assert.equal(
+      translator.getTranslation(text, britishToAmerican),
+      '<span class="highlight">Prof.</span> Joyner of King\'s College, London.'
+    );
+  });
+
+  test('should translate to american correctly 10', () => {
+    const text = 'Tea time is usually around 4 or 4.30.';
+    assert.equal(
+      translator.getTranslation(text, britishToAmerican),
+      'Tea time is usually around 4 or <span class="highlight">4:30</span>.'
+    );
+  });
+
 });
