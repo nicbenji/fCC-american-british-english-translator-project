@@ -73,6 +73,22 @@ suite('Unit Tests', () => {
     );
   });
 
+  test('should translate to british correctly 9', () => {
+    const text = 'Dr. Grosh will see you now.';
+    assert.equal(
+      translator.getTranslation(text, americanToBritish),
+      '<span class="highlight">Dr</span> Grosh will see you now.'
+    );
+  });
+
+  test('should translate to british correctly 10', () => {
+    const text = 'Lunch is at 12:15 today.';
+    assert.equal(
+      translator.getTranslation(text, americanToBritish),
+      'Lunch is at <span class="highlight">12.15</span> today.'
+    );
+  });
+
   test('should translate to american correctly 1', () => {
     const text = 'We watched the footie match for a while.';
     assert.equal(

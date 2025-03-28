@@ -17,7 +17,7 @@ function americanToBritish(text) {
     { table: americanToBritishTitles },
   ]
 
-  return translate(text, translationTbls);
+  return translate(text, translationTbls, '.');
 }
 
 function britishToAmerican(text) {
@@ -33,7 +33,7 @@ function britishToAmerican(text) {
   return translate(text, translationTbls);
 }
 
-function translate(text, translationTbls) {
+function translate(text, translationTbls, timeSeparator = ':') {
   const sortedTbls = [];
   for (let tbl of translationTbls) {
     sortedTbls.push(sortTranslationTbl(tbl));
@@ -43,6 +43,8 @@ function translate(text, translationTbls) {
   for (let tbl of sortedTbls) {
     translation = replacer(translation, tbl);
   }
+
+  translation = timeReplacer(translation, timeSeparator);
 
   if (text === translation) {
     return 'Everything looks good to me!';
@@ -68,6 +70,21 @@ function sortTranslationTbl(translationTbl) {
 function replacer(text, translationTbl) {
   for (let [key, value] of Object.entries(translationTbl)) {
     text = text.replace(new RegExp(key, 'gi'), `<span class="highlight">${value}</span>`);
+  }
+  return text;
+}
+
+function timeReplacer(text, separator) {
+  if (separator !== '.' && separator !== ':') {
+    throw new Error('Invalid separator');
+  }
+  const timestamps = text.match(/(0[0-9]|1[0-9]|2[0-3])(\.|:)[0-5][0-9]/g);
+  if (!timestamps) {
+    return text;
+  }
+  for (let time of timestamps) {
+    const timeWithNewSeparator = time.replace(/(\.|:)/, separator);
+    text = text.replace(time, `<span class="highlight">${timeWithNewSeparator}</span>`);
   }
   return text;
 }
