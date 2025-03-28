@@ -11,7 +11,7 @@ module.exports = function(app) {
       const { text, locale } = req.body;
 
       try {
-        const translation = translator.translate(text, locale);
+        const translation = translator.getTranslation(text, locale);
         return res.json({ text, translation });
       } catch (error) {
         return res.json({ error: error.message });

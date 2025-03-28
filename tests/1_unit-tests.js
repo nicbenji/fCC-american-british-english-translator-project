@@ -12,7 +12,7 @@ suite('Unit Tests', () => {
   test('should translate to british correctly 1', () => {
     const text = 'Mangoes are my favorite fruit.';
     assert.equal(
-      translator.translate(text, americanToBritish),
+      translator.getTranslation(text, americanToBritish),
       'Mangoes are my <span class="highlight">favourite</span> fruit.'
     );
   });
@@ -20,7 +20,7 @@ suite('Unit Tests', () => {
   test('should translate to british correctly 2', () => {
     const text = 'I ate yogurt for breakfast.';
     assert.equal(
-      translator.translate(text, americanToBritish),
+      translator.getTranslation(text, americanToBritish),
       'I ate <span class="highlight">yoghurt</span> for breakfast.'
     );
   });
@@ -28,7 +28,7 @@ suite('Unit Tests', () => {
   test('should translate to british correctly 3', () => {
     const text = "We had a party at my friend's condo.";
     assert.equal(
-      translator.translate(text, americanToBritish),
+      translator.getTranslation(text, americanToBritish),
       'We had a party at my friend\'s <span class="highlight">flat</span>.'
     );
   });
@@ -36,7 +36,7 @@ suite('Unit Tests', () => {
   test('should translate to british correctly 4', () => {
     const text = 'Can you toss this in the trashcan for me?';
     assert.equal(
-      translator.translate(text, americanToBritish),
+      translator.getTranslation(text, americanToBritish),
       'Can you toss this in the <span class="highlight">bin</span> for me?'
     );
   });
@@ -44,7 +44,7 @@ suite('Unit Tests', () => {
   test('should translate to american correctly 1', () => {
     const text = 'We watched the footie match for a while.';
     assert.equal(
-      translator.translate(text, britishToAmerican),
+      translator.getTranslation(text, britishToAmerican),
       'We watched the <span class="highlight">soccer</span> match for a while.'
     );
   });

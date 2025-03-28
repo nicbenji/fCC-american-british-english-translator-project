@@ -16,21 +16,8 @@ function americanToBritish(text) {
     { table: americanToBritishSpelling },
     { table: americanToBritishTitles },
   ]
-  //WARNING: ISSUE IS THAT SORT METHOD RETURNS AN ARRAY
-  const sortedTbls = [];
-  for (let tbl of translationTbls) {
-    sortedTbls.push(sortTranslationTbl(tbl));
-  }
 
-  let translation = text;
-  for (let tbl of sortedTbls) {
-    translation = replacer(translation, tbl);
-  }
-
-  if (text === translation) {
-    return 'Everything looks good to me!';
-  }
-  return translation;
+  return translate(text, translationTbls);
 }
 
 function britishToAmerican(text) {
@@ -42,6 +29,11 @@ function britishToAmerican(text) {
     },
     { table: americanToBritishTitles, reversed: true },
   ]
+
+  return translate(text, translationTbls);
+}
+
+function translate(text, translationTbls) {
   const sortedTbls = [];
   for (let tbl of translationTbls) {
     sortedTbls.push(sortTranslationTbl(tbl));
@@ -58,6 +50,7 @@ function britishToAmerican(text) {
   return translation;
 }
 
+// NOTE: Not supported on every environment, objects might be returned unsorted
 function sortTranslationTbl(translationTbl) {
   if (translationTbl.reversed) {
     return Object.fromEntries(
@@ -93,7 +86,7 @@ class Translator {
     }
   }
 
-  translate(text, locale) {
+  getTranslation(text, locale) {
     this.validateInput(text, locale);
     return locales[locale](text);
   }
