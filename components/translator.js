@@ -88,7 +88,7 @@ function timeReplacer(text, separator) {
     return text;
   }
   for (let time of timestamps) {
-    const timeWithNewSeparator = time.replace(/(\.|:)/, separator);
+    const timeWithNewSeparator = time.replace(/([.:])/, separator);
     text = text.replace(time, `<span class="highlight">${timeWithNewSeparator}</span>`);
   }
   return text;
