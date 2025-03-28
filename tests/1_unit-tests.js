@@ -41,6 +41,38 @@ suite('Unit Tests', () => {
     );
   });
 
+  test('should translate to british correctly 5', () => {
+    const text = 'The parking lot was full.';
+    assert.equal(
+      translator.getTranslation(text, americanToBritish),
+      'The <span class="highlight">car park</span> was full.'
+    );
+  });
+
+  test('should translate to british correctly 6', () => {
+    const text = 'Like a high tech Rube Goldberg machine.';
+    assert.equal(
+      translator.getTranslation(text, americanToBritish),
+      'Like a high tech <span class="highlight">Heath Robinson device</span>.'
+    );
+  });
+
+  test('should translate to british correctly 7', () => {
+    const text = 'To play hooky means to skip class or work.';
+    assert.equal(
+      translator.getTranslation(text, americanToBritish),
+      'To <span class="highlight">bunk off</span> means to skip class or work.'
+    );
+  });
+
+  test('should translate to british correctly 8', () => {
+    const text = 'No Mr. Bond, I expect you to die.';
+    assert.equal(
+      translator.getTranslation(text, americanToBritish),
+      'No <span class="highlight">Mr</span> Bond, I expect you to die.'
+    );
+  });
+
   test('should translate to american correctly 1', () => {
     const text = 'We watched the footie match for a while.';
     assert.equal(
@@ -48,5 +80,6 @@ suite('Unit Tests', () => {
       'We watched the <span class="highlight">soccer</span> match for a while.'
     );
   });
+
 
 });
